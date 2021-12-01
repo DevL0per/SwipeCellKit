@@ -416,25 +416,7 @@ extension SwipeController: SwipeActionsViewDelegate {
             
             switch style {
             case .delete:
-                actionsContainerView.mask = actionsView.createDeletionMask()
-                
-                self.delegate?.swipeController(self, didDeleteSwipeableAt: indexPath)
-                
-                UIView.animate(withDuration: 0.3, animations: {
-                    guard let actionsContainerView = self.actionsContainerView else { return }
-                    
-                    actionsContainerView.center.x = newCenter
-                    actionsContainerView.mask?.frame.size.height = 0
-                    swipeable.actionsView?.visibleWidth = abs(actionsContainerView.frame.minX)
-                    
-                    if fillOption.timing == .after {
-                        actionsView.alpha = 0
-                    }
-                }) { [weak self] _ in
-                    self?.actionsContainerView?.mask = nil
-                    self?.resetSwipe()
-                    self?.reset()
-                }
+                self.hideSwipe(animated: true)
             case .reset:
                 self.hideSwipe(animated: true)
             }
